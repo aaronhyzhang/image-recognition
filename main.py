@@ -77,12 +77,8 @@ def detect(cam=0, thres=0.7):
                 
         # Show the image
         cv2.imshow("output", img0)
-        # if cv2.waitKey(1) == ord('q'): #Quit (not working rn)
-        #     cv2.destroyAllWindows()
-        #     break
-        k = cv2.waitKey(1)
-        if k%256==27: # Esc to exit
-            print('Esc pressed, closing...')
+        if cv2.waitKey(1) == ord('q'): #Quit if q is pressed
+            print('Q pressed, closing...')
             break
 
 if __name__ == "__main__":
