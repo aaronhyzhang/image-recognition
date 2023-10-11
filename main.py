@@ -32,20 +32,18 @@ mtcnn = MTCNN(
 mtcnn.detect_box = MethodType(detect_box, mtcnn)
 
 #Reading the saved pictures, iterates through each file in the folder and saves the embeddings in a dictionary
-saved_pictures = "photos"
+saved_pictures = "photos/saved"
 total_faces = {}
-file = "facedetector.py"
+file = "main.py"
 #What this is doing is splitting the file name and extension so it's assuming that it's jpg file and that the name is the name of the person.
 for file in os.listdir(saved_pictures):
     person_face, extension = os.path.splitext(file)
-    if extension == 'jpg':
+    if extension == '.jpg':
         img = cv2.imread(f'{saved_pictures}/{file}')
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # Convert BGR to RGB
         cropped = mtcnn(img)
-        #This is why down here, it's saving the embedding of the face in the dictionary to the name.
         if cropped is not None:
-            total_faces[person_face] = encode(cropped)[0, :]
-
-
+            total_faces[person_face] = encode(cropped).detach()[0, :] 
 
 #Opening webcam
 def detect(cam=0, thres=0.7):
